@@ -1,0 +1,9 @@
+<%- include('./partials/header.ejs') %>
+<div>
+    <ul>
+        <% users.forEach(function(row) {%>
+            <li><%= row.firstname %> <%= row.lastname %>: <%= row.throwingspeed %> km/h</li>
+        <% }); %>
+    </ul>
+</div>
+<%- include('./partials/footer.ejs') %>
