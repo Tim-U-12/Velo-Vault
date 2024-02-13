@@ -13,9 +13,10 @@ const db = new pg.Client({
 db.connect();
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.static("public"));
+app.set('view engine', 'ejs'); // Ensure EJS is set as the view engine
 
 async function fetchUsers() {
     const users = await db.query("SELECT * FROM users")
