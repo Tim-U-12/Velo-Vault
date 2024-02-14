@@ -2,15 +2,15 @@ import 'dotenv/config';
 import express from "express";
 import pg from "pg";
 
-const db = new pg.Client({
-    user: "postgres",
-    host: "localhost",
-    database: "throwing speeds",
-    password: process.env.PG_PASSWORD,
-    port: 5432
-});
+// const db = new pg.Client({
+//     user: "postgres",
+//     host: "localhost",
+//     database: "throwing speeds",
+//     password: process.env.PG_PASSWORD,
+//     port: 5432
+// });
 
-db.connect();
+// db.connect();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,13 +24,14 @@ async function fetchUsers() {
 }
 
 app.get('/', async (req, res) => {
-    try {
-        const users = await fetchUsers() 
-        res.render("main.ejs", {users: users})
-    } catch (error) {
-        console.error('Error fetching data', error);
-        res.status(500).send('Error fetching data');
-    }
+    res.render("index.ejs")
+    // try {
+    //     const users = await fetchUsers() 
+    //     res.render("main.ejs", {users: users})
+    // } catch (error) {
+    //     console.error('Error fetching data', error);
+    //     res.status(500).send('Error fetching data');
+    // }
 });
 
 app.listen(port, () => {
