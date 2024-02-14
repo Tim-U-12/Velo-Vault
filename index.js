@@ -1,19 +1,16 @@
 import 'dotenv/config';
 import express from "express";
-import pg from "pg";
-
-// const db = new pg.Client({
-//     user: "postgres",
-//     host: "localhost",
-//     database: "throwing speeds",
-//     password: process.env.PG_PASSWORD,
-//     port: 5432
-// });
-
-// db.connect();
+import {Pool} from "pg";
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+        rejectUnauthorized: false,
+    }
+});
 
 app.use(express.static("public"));
 app.set('view engine', 'ejs'); // Ensure EJS is set as the view engine
