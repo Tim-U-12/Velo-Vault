@@ -14,7 +14,7 @@ const pool = new Pool({
 });
 
 app.use(express.static("public"));
-app.set('view engine', 'ejs'); // Ensure EJS is set as the view engine
+app.set('view engine', 'ejs');
 
 async function fetchUsers() {
     const users = await pool.query("SELECT * FROM users")
