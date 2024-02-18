@@ -2,6 +2,7 @@ import 'dotenv/config';
 import express from "express";
 import pg from "pg";
 import bodyParser from 'body-parser';
+import jwt from 'jsonwebtoken';
 
 const { Pool } = pg;
 const app = express();
@@ -37,8 +38,33 @@ app.get('/login', async (req, res) => {
     res.render("login.ejs")
 })
 
+const users = [
+    {
+        username: 'john',
+        password: 'password123admin',
+        role: 'admin'
+    }, {
+        username: 'anna',
+        password: 'password123member',
+        role: 'member'
+    }
+];
+
+const accessTokenSecret = 'youraccesstokensecret';
+
 app.post('/login', async (req, res) => {
-    console.log(req.body)
+    const { username, password } = req.body;
+
+    const user = users.find(u => { return u.username === username && u.password === password});
+    if (user) {
+        const accessToken = jwt.sign({ username: user.username, role: user.role}, accessTokenSecret);
+        
+        res.json({
+            accessToken
+        });
+    } else {
+        res.send('Username or password is incorrect');
+    }
 })
 
 app.listen(port, () => {
