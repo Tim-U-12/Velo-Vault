@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import express from "express";
 import pg from "pg";
+import bodyParser from 'body-parser';
 
 const { Pool } = pg;
 const app = express();
@@ -13,6 +14,7 @@ const pool = new Pool({
     }
 });
 
+app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
 
@@ -30,6 +32,14 @@ app.get('/', async (req, res) => {
         res.status(500).send('Error fetching data');
     }
 });
+
+app.get('/login', async (req, res) => {
+    res.render("login.ejs")
+})
+
+app.post('/login', async (req, res) => {
+    console.log(req.body)
+})
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
