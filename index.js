@@ -20,8 +20,8 @@ app.use(express.static("public"));
 app.set('view engine', 'ejs');
 
 async function fetchUsers() {
-    const users = await pool.query("SELECT * FROM users")
-    return users.rows
+        const users = await pool.query("SELECT u.first_name, u.last_name, MAX(t.throw_speed_kmh) AS max_throw_speed_kmh FROM users u, throws t WHERE t.id = u.id GROUP BY u.id ORDER BY max_throw_speed_kmh DESC")
+        return users.rows
 }
 
 app.get('/', async (req, res) => {
@@ -38,6 +38,7 @@ app.get('/login', async (req, res) => {
     res.render("login.ejs")
 })
 
+// replace with database
 const users = [
     {
         username: 'john',
@@ -50,6 +51,7 @@ const users = [
     }
 ];
 
+// hide access token in .env
 const accessTokenSecret = 'youraccesstokensecret';
 
 app.post('/login', async (req, res) => {

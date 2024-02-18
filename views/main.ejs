@@ -1,8 +1,16 @@
 <%- include('./partials/header.ejs') %>
 <div>
+    <span>sort by: </span>
+    <a>Mixed</a>
+    <a>Female</a>
+    <a>Male</a>
+</div>
+<div>
     <ul>
+        <% let counter = 1; %>
         <% users.forEach(function(row) {%>
-            <li><%= row.first_name %> <%= row.last_name %>: <%= row.height_metres %></li>
+            <li><%= counter %>. <%= row.first_name %> <%= row.last_name %>: <%= row.max_throw_speed_kmh %> km/h</li>
+            <% counter++; %>
         <% }); %>
     </ul>
 </div>
