@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from "express";
 import pg from "pg";
 import bodyParser from 'body-parser';
-import jwt from 'jsonwebtoken';
+import session from 'express-session';
 
 const { Pool } = pg;
 const app = express();
@@ -18,6 +18,12 @@ const pool = new Pool({
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
+app.use(session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false }
+}));
 
 async function fetchUsers() {
         const users = await pool.query("SELECT u.first_name, u.last_name, MAX(t.throw_speed_kmh) AS max_throw_speed_kmh FROM users u, throws t WHERE t.id = u.id GROUP BY u.id ORDER BY max_throw_speed_kmh DESC")
@@ -38,35 +44,29 @@ app.get('/login', async (req, res) => {
     res.render("login.ejs")
 })
 
-// replace with database
-const users = [
-    {
-        username: 'john',
-        password: 'password123admin',
-        role: 'admin'
-    }, {
-        username: 'anna',
-        password: 'password123member',
-        role: 'member'
-    }
-];
-
-// hide access token in .env
-const accessTokenSecret = 'youraccesstokensecret';
+const users = {
+    'admin': 'password123'
+  };
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    const user = users.find(u => { return u.username === username && u.password === password});
-    if (user) {
-        const accessToken = jwt.sign({ username: user.username, role: user.role}, accessTokenSecret);
-        
-        res.json({
-            accessToken
-        });
+    if (users[username] && users[username] === password) {
+        req.session.userID = username;
+        res.render('admin.ejs')
     } else {
-        res.send('Username or password is incorrect');
+        res.send('Invalid username or password');
     }
+});
+
+app.get("/logout", (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.redirect('/')
+        }
+        res.clearCookie('connect.sid');
+        res.redirect('/')
+    })
 })
 
 app.listen(port, () => {
