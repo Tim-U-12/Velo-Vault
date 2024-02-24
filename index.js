@@ -82,6 +82,7 @@ app.post('/admin-create', isAuthenticated, (req, res) => {
     res.render('./admin/create.ejs')
 })
 
+// listen
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
