@@ -75,7 +75,7 @@ app.get('/admin', isAuthenticated, (req, res) => {
     res.render('admin.ejs')
 })
 
-app.get('/admin-create', isAuthenticated, (req, res) => {
+app.get('/admin-create-user', isAuthenticated, (req, res) => {
     res.render('./admin/create-user.ejs')
 })
 
@@ -93,7 +93,7 @@ app.post('/admin-create-user', isAuthenticated, async (req, res) => {
     try {
         const result = await pool.query(text, values);
         console.log(result.rows[0])
-        res.redirect('/admin-create')
+        res.redirect('/admin-create-user')
     } catch (error) {
         console.error(err);
         res.status(500).send('Server error')
