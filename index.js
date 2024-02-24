@@ -79,11 +79,26 @@ app.get('/admin-create', isAuthenticated, (req, res) => {
     res.render('./admin/create-user.ejs')
 })
 
-app.post('/admin-create-user', isAuthenticated, (req, res) => {
+app.post('/admin-create-user', isAuthenticated, async (req, res) => {
     // insert user information
-    console.log(req.body)
-    res.redirect('/admin-create')
-})
+    const text = 'INSERT INTO users(first_name, last_name, dominant_arm, height_metres, sex) VALUES($1, $2, $3, $4, $5) RETURNING *';
+    const values = [
+        req.body.first_name,
+        req.body.last_name,
+        req.body.dominant_arm,
+        req.body.height_metres,
+        req.body.sex
+    ];
+
+    try {
+        const result = await pool.query(text, values);
+        console.log(result.rows[0])
+        res.redirect('/admin-create')
+    } catch (error) {
+        console.error(err);
+        res.status(500).send('Server error')
+    }
+});
 
 // listen
 app.listen(port, () => {
@@ -91,5 +106,5 @@ app.listen(port, () => {
 });
 
 // Handle termination and interrupt signals
-process.on('SIGTERM', gracefulShutdown(pool));
-process.on('SIGINT', gracefulShutdown(pool));
+process.on('SIGTERM', () => gracefulShutdown(pool));
+process.on('SIGINT', () => gracefulShutdown(pool));
