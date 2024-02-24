@@ -5,15 +5,15 @@
 <h1>ADMIN</h1>
 
 <form action="/admin-create-user" method="get">
-    <section>
-        <button type="submit">CREATE</button>
-    </section>
+    <section><button type="submit">CREATE: User</button></section>
+</form>
+
+<form action="/admin-insert-throw" method="get">
+    <section><button type="submit">INSERT: Throw</button></section>
 </form>
 
 <form action="/logout" method="get">
-    <section>
-        <button type="submit">Logout</button>
-    </section>
+    <section><button type="submit">Logout</button></section>
 </form>
 
 <%- include('./partials/footer.ejs') %>

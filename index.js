@@ -100,6 +100,15 @@ app.post('/admin-create-user', isAuthenticated, async (req, res) => {
     }
 });
 
+app.get('/admin-insert-throw', isAuthenticated, (req, res) => {
+    res.render('./admin/insert-throw.ejs')
+})
+
+app.post('/admin-insert-throw', isAuthenticated, (req, res) => {
+    console.log(req.body)
+    res.redirect('/admin-insert-throw')
+})
+
 // listen
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);

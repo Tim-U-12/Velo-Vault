@@ -5,7 +5,7 @@
 }
 
 section {
-    margin-bottom: 1rem;
+    margin-bottom:0.5rem;
 }
 
 ul {
@@ -14,4 +14,18 @@ ul {
 
 h1 {
     color: orange;
+}
+
+label {
+    display: block;
+}
+
+input[type="radio"] {
+    display: inline-block;
+    margin-right: 5px;
+  }
+  
+/* This will make the radio buttons and their labels inline */
+label + input[type='radio'] + label {
+display: inline;
 }
