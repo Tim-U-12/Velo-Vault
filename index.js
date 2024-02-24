@@ -3,6 +3,7 @@ import express from "express";
 import pg from "pg";
 import bodyParser from 'body-parser';
 import session from 'express-session';
+import * as helpers from './helpers.js';
 
 const { Pool } = pg;
 const app = express();
@@ -15,6 +16,7 @@ const pool = new Pool({
     }
 });
 
+// middle ware
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
@@ -22,18 +24,16 @@ app.use(session({
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false }
+    cookie: { 
+        secure: false,
+        httpOnly: true
+    }
 }));
-
-async function fetchUsers() {
-        const users = await pool.query("SELECT u.first_name, u.last_name, MAX(t.throw_speed_kmh) AS max_throw_speed_kmh FROM users u, throws t WHERE t.id = u.id GROUP BY u.id ORDER BY max_throw_speed_kmh DESC")
-        return users.rows
-}
 
 app.get('/', async (req, res) => {
     try {
-        const users = await fetchUsers() 
-        res.render("main.ejs", {users: users})
+        const users = await helpers.fetchUsers(pool); 
+        res.render("main.ejs", {users: users});
     } catch (error) {
         console.error('Error fetching data', error);
         res.status(500).send('Error fetching data');
@@ -44,14 +44,18 @@ app.get('/login', async (req, res) => {
     res.render("login.ejs")
 })
 
-const users = {
-    'admin': 'password123'
-  };
+app.get('/admin', (req, res) => {
+    if (!req.session.userID) {
+        return res.redirect('/login')
+    }
+    res.render('admin.ejs')
+})
+
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    if (users[username] && users[username] === password) {
+    if (username === process.env.ADMIN_USER && password === process.env.ADMIN_PASSWORD) {
         req.session.userID = username;
         res.render('admin.ejs')
     } else {
