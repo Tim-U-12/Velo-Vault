@@ -42,7 +42,6 @@ app.get('/', async (req, res) => {
     }
 });
 
-
 // Logins and logout
 app.get('/login', async (req, res) => {
     res.render("login.ejs")
@@ -68,7 +67,6 @@ app.get("/logout", (req, res) => {
         res.redirect('/')
     })
 })
-
 
 // Admin
 app.get('/admin', isAuthenticated, (req, res) => {
@@ -104,10 +102,24 @@ app.get('/admin-insert-throw', isAuthenticated, (req, res) => {
     res.render('./admin/insert-throw.ejs')
 })
 
-app.post('/admin-insert-throw', isAuthenticated, (req, res) => {
-    console.log(req.body)
-    res.redirect('/admin-insert-throw')
-})
+app.post('/admin-insert-throw', isAuthenticated, async(req, res) => {
+    const text = 'INSERT INTO throws(id, date, throw_speed_kmh) VALUES ($1, $2, $3) RETURNING *'
+    const currentDate = new Date().toISOString().split('T')[0];
+    const values = [
+        req.body.id,
+        currentDate,
+        req.body.throw_speed,
+    ];
+    
+    try {
+        const result = await pool.query(text, values);
+        console.log(result.rows[0])
+        res.redirect('/admin-insert-throw')
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Server error')
+    }
+});
 
 // listen
 app.listen(port, () => {
