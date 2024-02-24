@@ -3,7 +3,8 @@ import express from "express";
 import pg from "pg";
 import bodyParser from 'body-parser';
 import session from 'express-session';
-import * as helpers from './helpers.js';
+import { fetchUsers } from './helpers.js';
+import { isAuthenticated } from './helpers.js';
 
 const { Pool } = pg;
 const app = express();
@@ -32,7 +33,7 @@ app.use(session({
 
 app.get('/', async (req, res) => {
     try {
-        const users = await helpers.fetchUsers(pool); 
+        const users = await fetchUsers(pool); 
         res.render("main.ejs", {users: users});
     } catch (error) {
         console.error('Error fetching data', error);
@@ -69,11 +70,16 @@ app.get("/logout", (req, res) => {
 
 
 // Admin
-app.get('/admin', (req, res) => {
-    if (!req.session.userID) {
-        return res.redirect('/login')
-    }
+app.get('/admin', isAuthenticated, (req, res) => {
     res.render('admin.ejs')
+})
+
+app.get('/admin-create', isAuthenticated, (req, res) => {
+    res.render('./admin/create.ejs')
+})
+
+app.post('/admin-create', isAuthenticated, (req, res) => {
+    res.render('./admin/create.ejs')
 })
 
 app.listen(port, () => {

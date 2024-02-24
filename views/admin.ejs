@@ -1,3 +1,19 @@
-<form action="/logout" method="get">
-    <button type="submit">Logout</button>
+<!-- tabs for insertion -->
+<!-- Main HUB -->
+<%- include('./partials/header.ejs') %>
+
+<h1>ADMIN</h1>
+
+<form action="/admin-create" method="get">
+    <section>
+        <button type="submit">CREATE</button>
+    </section>
 </form>
+
+<form action="/logout" method="get">
+    <section>
+        <button type="submit">Logout</button>
+    </section>
+</form>
+
+<%- include('./partials/footer.ejs') %>

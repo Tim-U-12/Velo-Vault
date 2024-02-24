@@ -3,4 +3,11 @@ async function fetchUsers(pool) {
     return users.rows
 }
 
-export { fetchUsers };
+function isAuthenticated(req, res, next) {
+    if (!req.session.userID) {
+        return res.redirect('/login');
+    }
+    next();
+}
+
+export { fetchUsers , isAuthenticated};
