@@ -40,17 +40,11 @@ app.get('/', async (req, res) => {
     }
 });
 
+
+// Logins and logout
 app.get('/login', async (req, res) => {
     res.render("login.ejs")
 })
-
-app.get('/admin', (req, res) => {
-    if (!req.session.userID) {
-        return res.redirect('/login')
-    }
-    res.render('admin.ejs')
-})
-
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
@@ -71,6 +65,15 @@ app.get("/logout", (req, res) => {
         res.clearCookie('connect.sid');
         res.redirect('/')
     })
+})
+
+
+// Admin
+app.get('/admin', (req, res) => {
+    if (!req.session.userID) {
+        return res.redirect('/login')
+    }
+    res.render('admin.ejs')
 })
 
 app.listen(port, () => {
