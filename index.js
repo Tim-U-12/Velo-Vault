@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import session from 'express-session';
 import { fetchUsers } from './helpers.js';
 import { isAuthenticated } from './helpers.js';
+import { gracefulShutdown } from './helpers.js';
 
 const { Pool } = pg;
 const app = express();
@@ -75,14 +76,20 @@ app.get('/admin', isAuthenticated, (req, res) => {
 })
 
 app.get('/admin-create', isAuthenticated, (req, res) => {
-    res.render('./admin/create.ejs')
+    res.render('./admin/create-user.ejs')
 })
 
-app.post('/admin-create', isAuthenticated, (req, res) => {
-    res.render('./admin/create.ejs')
+app.post('/admin-create-user', isAuthenticated, (req, res) => {
+    // insert user information
+    console.log(req.body)
+    res.redirect('/admin-create')
 })
 
 // listen
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
+
+// Handle termination and interrupt signals
+process.on('SIGTERM', gracefulShutdown(pool));
+process.on('SIGINT', gracefulShutdown(pool));

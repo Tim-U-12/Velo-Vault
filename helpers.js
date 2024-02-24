@@ -10,4 +10,12 @@ function isAuthenticated(req, res, next) {
     next();
 }
 
-export { fetchUsers , isAuthenticated};
+function gracefulShutdown(pool) {
+    console.log("Closing pool and shutting down the server...");
+    pool.end(() => {
+        console.log("Pool has ended.");
+        process.exit(0);
+    });
+}
+
+export { fetchUsers , isAuthenticated , gracefulShutdown };
