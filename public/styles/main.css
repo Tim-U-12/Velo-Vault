@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+.rank {
+    text-align: center;
+    width: 20%;
+}
+
 section {
     margin-bottom:0.5rem;
 }

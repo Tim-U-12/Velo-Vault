@@ -8,12 +8,22 @@
     <a>Male</a>
 </div>
 <div>
-    <ul>
+    <table>
+        <tr>
+            <td class="rank" style="width: 20%;">Rank</td>
+            <td>Name</td>
+            <td style="width: 30%;">Throwing Speed (km/h)</td>
+        </tr>
+        
         <% let counter = 1; %>
-        <% users.forEach(function(row) {%>
-            <li><%= counter %>. <%= row.first_name %> <%= row.last_name %>: <%= row.max_throw_speed_kmh %> km/h</li>
+        <% users.forEach(function(row) { %>
+            <tr>
+                <td class="rank"><%= counter %></td>
+                <td><%= row.first_name %> <%= row.last_name %></td>
+                <td><%= row.max_throw_speed_kmh %></td>
+            </tr>
             <% counter++; %>
-        <% }); %>
-    </ul>
+        <% }) %>
+    </table>
 </div>
 <%- include('./partials/footer.ejs') %>
