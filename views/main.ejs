@@ -2,11 +2,11 @@
 <h1>Top Throws</h1>
 
 <div>
-    <button data-gender="any">All</button>
-    <button data-gender="female">Female</button>
-    <button data-gender="male">Male</button>
+    <button onclick="fetchResults('any')">All</button>
+    <button onclick="fetchResults('female')">Female</button>
+    <button onclick="fetchResults('male')">Male</button>
 </div>
-<div id="results">
+<div id="ladder-results">
     <!-- Filtered results will appear here -->
     <table>
         <thead>
