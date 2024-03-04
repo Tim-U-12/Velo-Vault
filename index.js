@@ -33,6 +33,7 @@ app.use(session({
     }
 }));
 
+//main page
 app.get('/', async (req, res) => {
     try {
         let users;
