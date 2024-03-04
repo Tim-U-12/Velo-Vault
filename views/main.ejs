@@ -2,28 +2,31 @@
 <h1>Top Throws</h1>
 
 <div>
-    <span>sort by: </span>
-    <a>Mixed</a>
-    <a>Female</a>
-    <a>Male</a>
+    <button data-gender="any">All</button>
+    <button data-gender="female">Female</button>
+    <button data-gender="male">Male</button>
 </div>
-<div>
+<div id="results">
+    <!-- Filtered results will appear here -->
     <table>
-        <tr>
-            <td class="rank" style="width: 20%;">Rank</td>
-            <td>Name</td>
-            <td style="width: 30%;">Throwing Speed (km/h)</td>
-        </tr>
-        
-        <% let counter = 1; %>
-        <% users.forEach(function(row) { %>
+        <thead>
             <tr>
-                <td class="rank"><%= counter %></td>
-                <td><%= row.first_name %> <%= row.last_name %></td>
-                <td><%= row.max_throw_speed_kmh %></td>
+                <td class="rank">Rank</td>
+                <td>Name</td>
+                <td style="width: 30%;">Throwing Speed (km/h)</td>
             </tr>
-            <% counter++; %>
-        <% }) %>
+        </thead>
+        <tbody>
+            <% let counter = 1; %>
+            <% users.forEach(function(row) { %>
+                <tr>
+                    <td class="rank"><%= counter %></td>
+                    <td><%= row.first_name %> <%= row.last_name %></td>
+                    <td><%= row.max_throw_speed_kmh %></td>
+                </tr>
+                <% counter++; %>
+            <% }) %>
+        </tbody>
     </table>
 </div>
 <%- include('./partials/footer.ejs') %>

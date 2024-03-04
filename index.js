@@ -1,3 +1,4 @@
+import ejs from 'ejs';
 import 'dotenv/config';
 import express from "express";
 import pg from "pg";
@@ -34,13 +35,27 @@ app.use(session({
 
 app.get('/', async (req, res) => {
     try {
-        const users = await fetchUsers(pool); 
+        let users;
+        const genderChoice = "any"
+        users = await fetchUsers(pool, genderChoice);
         res.render("main.ejs", {users: users});
     } catch (error) {
         console.error('Error fetching data', error);
         res.status(500).send('Error fetching data');
     }
 });
+
+app.get('/filter', async (req, res) => {
+    try {
+        const { genderChoice } = req.query;
+        const users = await fetchUsers(pool, genderChoice);
+        const usersHtml = await ejs.renderFile('./views/partials/ladder.ejs', { users: users });
+        res.send(usersHtml);
+    } catch (error) {
+        console.error('Error fetching data', error);
+        res.status(500).send('Error fetching data');
+    }
+})
 
 // Logins and logout
 app.get('/login', async (req, res) => {
