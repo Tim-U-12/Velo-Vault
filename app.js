@@ -3,10 +3,12 @@ import 'dotenv/config';
 import express from "express";
 import pg from "pg";
 import bodyParser from 'body-parser';
-import session from 'express-session';
 import { fetchUsers } from './helpers.js';
-import { isAuthenticated } from './helpers.js';
 import { gracefulShutdown } from './helpers.js';
+// import indexRouter from './routes/index.js';
+import authRouter from './routes/auth.js'
+import passport from 'passport';
+import session from 'express-session';
 
 const { Pool } = pg;
 const app = express();
@@ -23,15 +25,15 @@ const pool = new Pool({
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
+app.use('/', authRouter)
+
 app.use(session({
     secret: process.env.SESSION_KEY,
     resave: false,
-    saveUninitialized: true,
-    cookie: { 
-        secure: false,
-        httpOnly: true
-    }
+    saveUninitialized: false,
+    // store: ... || https://www.passportjs.org/tutorials/password/session/
 }));
+app.use(passport.authenticate('session'));
 
 //main page
 app.get('/', async (req, res) => {
@@ -59,21 +61,6 @@ app.get('/filter', async (req, res) => {
 })
 
 // Logins and logout
-app.get('/login', async (req, res) => {
-    res.render("login.ejs")
-})
-
-app.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-
-    if (username === process.env.ADMIN_USER && password === process.env.ADMIN_PASSWORD) {
-        req.session.userID = username;
-        res.render('admin.ejs')
-    } else {
-        res.send('Invalid username or password');
-    }
-});
-
 app.get("/logout", (req, res) => {
     req.session.destroy(err => {
         if (err) {
@@ -85,16 +72,15 @@ app.get("/logout", (req, res) => {
 })
 
 // Admin
-app.get('/admin', isAuthenticated, (req, res) => {
+app.get('/admin', (req, res) => {
     res.render('admin.ejs')
 })
 
-app.get('/admin-create-user', isAuthenticated, (req, res) => {
+app.get('/admin-create-user', (req, res) => {
     res.render('./admin/create-user.ejs')
 })
 
-app.post('/admin-create-user', isAuthenticated, async (req, res) => {
-    // insert user information
+app.post('/admin-create-user', async (req, res) => {
     const text = 'INSERT INTO users(first_name, last_name, dominant_arm, height_metres, sex) VALUES($1, $2, $3, $4, $5) RETURNING *';
     const values = [
         req.body.first_name,
@@ -114,11 +100,11 @@ app.post('/admin-create-user', isAuthenticated, async (req, res) => {
     }
 });
 
-app.get('/admin-insert-throw', isAuthenticated, (req, res) => {
+app.get('/admin-insert-throw', (req, res) => {
     res.render('./admin/insert-throw.ejs')
 })
 
-app.post('/admin-insert-throw', isAuthenticated, async(req, res) => {
+app.post('/admin-insert-throw', async(req, res) => {
     const text = 'INSERT INTO throws(id, date, throw_speed_kmh) VALUES ($1, $2, $3) RETURNING *'
     const currentDate = new Date().toISOString().split('T')[0];
     const values = [

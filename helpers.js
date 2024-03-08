@@ -7,23 +7,15 @@ async function fetchUsers(pool, genderChoice) {
     }
 
     const text = `
-SELECT u.first_name, u.last_name, MAX(t.throw_speed_kmh) AS max_throw_speed_kmh
+SELECT u.first_name, u.last_name, MAX(t.throw_speed) AS max_throw_speed_kmh
 FROM users u
-JOIN throws t ON t.id = u.id
+JOIN throws t ON t.user_id = u.user_id
 WHERE u.sex = ANY($1::text[])
-GROUP BY u.id
+GROUP BY u.user_id
 ORDER BY max_throw_speed_kmh DESC`;
 
     const result = await pool.query(text, [genderValues])
     return result.rows
-}
-
-function isAuthenticated(req, res, next) {
-    if (!req.session.userID) {
-        return res.redirect('/login');
-    }
-    console.log("Successfully Authenticated")
-    next();
 }
 
 function gracefulShutdown(pool) {
@@ -34,4 +26,4 @@ function gracefulShutdown(pool) {
     });
 }
 
-export { fetchUsers , isAuthenticated , gracefulShutdown };
+export { fetchUsers , gracefulShutdown };
