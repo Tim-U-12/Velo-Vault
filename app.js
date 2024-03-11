@@ -9,6 +9,7 @@ import { gracefulShutdown } from './helpers.js';
 import authRouter from './routes/auth.js'
 import passport from 'passport';
 import session from 'express-session';
+import connectPgSimple from 'connect-pg-simple';
 
 const { Pool } = pg;
 const app = express();
@@ -25,15 +26,21 @@ const pool = new Pool({
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
 app.set('view engine', 'ejs');
-app.use('/', authRouter)
 
+const pgSession = connectPgSimple(session);
 app.use(session({
+    store: new pgSession({
+        pool : pool, // Use the existing pool instance
+        tableName : 'session' // Optional. Use a different table name (default is 'session')
+    }),
     secret: process.env.SESSION_KEY,
     resave: false,
     saveUninitialized: false,
-    // store: ... || https://www.passportjs.org/tutorials/password/session/
+    cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 } // 30 days    
 }));
-app.use(passport.authenticate('session'));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/', authRouter)
 
 //main page
 app.get('/', async (req, res) => {
@@ -73,7 +80,12 @@ app.get("/logout", (req, res) => {
 
 // Admin
 app.get('/admin', (req, res) => {
-    res.render('admin.ejs')
+    if (req.isAuthenticated()) {
+        res.render('admin.ejs')
+    } else {
+        res.redirect('/login')
+    }
+    
 })
 
 app.get('/admin-create-user', (req, res) => {
