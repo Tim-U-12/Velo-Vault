@@ -1,27 +1,19 @@
 import ejs from 'ejs';
-import 'dotenv/config';
 import express from "express";
-import pg from "pg";
 import bodyParser from 'body-parser';
-import { fetchUsers } from './helpers.js';
-import { gracefulShutdown } from './helpers.js';
-// import indexRouter from './routes/index.js';
-import authRouter from './routes/auth.js';
-import adminRouter from './routes/admin.js';
 import passport from 'passport';
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
 
-const { Pool } = pg;
+import authRouter from './routes/auth.js';
+import adminRouter from './routes/admin.js';
+import { fetchUsers } from './helpers.js';
+import { gracefulShutdown } from './helpers.js';
+import { pool } from './models/postgres_db.js';
+import 'dotenv/config';
+
 const app = express();
 const port = process.env.PORT || 3000;
-
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: {
-        rejectUnauthorized: false,
-    }
-});
 
 // middle ware
 app.use(bodyParser.urlencoded({extended:true}));
@@ -68,8 +60,6 @@ app.get('/filter', async (req, res) => {
         res.status(500).send('Error fetching data');
     }
 })
-
-export { pool }
 
 // listen
 app.listen(port, () => {

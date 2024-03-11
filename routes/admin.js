@@ -1,5 +1,5 @@
 import express from 'express';
-import { pool } from '../app.js';
+import { pool } from '../models/postgres_db.js';
 const router = express.Router();
 
 router.get('/admin', (req, res) => {
