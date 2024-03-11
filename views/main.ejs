@@ -1,7 +1,7 @@
 <%- include('./partials/header.ejs') %>
 <h1>Top Throws</h1>
 
-<div>
+<div id="filter-by-sex">
     <button onclick="fetchResults('any')">All</button>
     <button onclick="fetchResults('female')">Female</button>
     <button onclick="fetchResults('male')">Male</button>
@@ -13,7 +13,7 @@
             <tr>
                 <td class="rank">Rank</td>
                 <td>Name</td>
-                <td style="width: 30%;">Throwing Speed (km/h)</td>
+                <td class="speed">Speed (km/h)</td>
             </tr>
         </thead>
         <tbody>
@@ -22,7 +22,7 @@
                 <tr>
                     <td class="rank"><%= counter %></td>
                     <td><%= row.first_name %> <%= row.last_name %></td>
-                    <td><%= row.max_throw_speed_kmh %></td>
+                    <td><%= row.throw_speed %></td>
                 </tr>
                 <% counter++; %>
             <% }) %>

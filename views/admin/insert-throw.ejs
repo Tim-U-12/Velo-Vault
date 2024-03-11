@@ -3,8 +3,15 @@
 <h1>INSERT: Throw</h1>
 <form action="/admin-insert-throw" method="post">
     <section>
-        <label for="id">User ID: </label>
-        <input type="number" name="id" id="id">
+        <label for="user_id">User ID: </label>
+        <input type="number" name="user_id" id="user_id">
+    </section>
+    <section>
+        <label>Throw Type: </label>
+        <input type="radio" id="standing" name="throw_type" value="standing">
+        <label for="standing">Standing</label>
+        <input type="radio" id="running" name="throw_type" value="running">
+        <label for="running">Running</label>
     </section>
     <section>
         <label for="throw_speed">Throw Speed (km/h): </label>

@@ -9,6 +9,29 @@
     width: 20%;
 }
 
+.speed {
+    width: 40%;
+}
+
+#filter-by-sex {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    margin-bottom: 0.5rem;
+}
+
+#ladder-results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+
+table {
+    margin: 0 auto; /* Centers the table horizontally */
+}
+
 section {
     margin-bottom:0.5rem;
 }
