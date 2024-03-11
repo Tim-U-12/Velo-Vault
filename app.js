@@ -6,7 +6,8 @@ import bodyParser from 'body-parser';
 import { fetchUsers } from './helpers.js';
 import { gracefulShutdown } from './helpers.js';
 // import indexRouter from './routes/index.js';
-import authRouter from './routes/auth.js'
+import authRouter from './routes/auth.js';
+import adminRouter from './routes/admin.js';
 import passport from 'passport';
 import session from 'express-session';
 import connectPgSimple from 'connect-pg-simple';
@@ -41,6 +42,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', authRouter)
+app.use('/', adminRouter)
 
 //main page
 app.get('/', async (req, res) => {
@@ -67,73 +69,6 @@ app.get('/filter', async (req, res) => {
     }
 })
 
-// Logins and logout
-app.get("/logout", (req, res) => {
-    req.session.destroy(err => {
-        if (err) {
-            return res.redirect('/')
-        }
-        res.clearCookie('connect.sid');
-        res.redirect('/')
-    })
-})
-
-// Admin
-app.get('/admin', (req, res) => {
-    if (req.isAuthenticated()) {
-        res.render('admin.ejs')
-    } else {
-        res.redirect('/login')
-    }
-    
-})
-
-app.get('/admin-create-user', (req, res) => {
-    res.render('./admin/create-user.ejs')
-})
-
-app.post('/admin-create-user', async (req, res) => {
-    const text = 'INSERT INTO users(first_name, last_name, dominant_arm, height_metres, sex) VALUES($1, $2, $3, $4, $5) RETURNING *';
-    const values = [
-        req.body.first_name,
-        req.body.last_name,
-        req.body.dominant_arm,
-        req.body.height_metres,
-        req.body.sex
-    ];
-
-    try {
-        const result = await pool.query(text, values);
-        console.log(result.rows[0])
-        res.redirect('/admin-create-user')
-    } catch (error) {
-        console.error(err);
-        res.status(500).send('Server error')
-    }
-});
-
-app.get('/admin-insert-throw', (req, res) => {
-    res.render('./admin/insert-throw.ejs')
-})
-
-app.post('/admin-insert-throw', async(req, res) => {
-    const text = 'INSERT INTO throws(id, date, throw_speed_kmh) VALUES ($1, $2, $3) RETURNING *'
-    const currentDate = new Date().toISOString().split('T')[0];
-    const values = [
-        req.body.id,
-        currentDate,
-        req.body.throw_speed,
-    ];
-    
-    try {
-        const result = await pool.query(text, values);
-        console.log(result.rows[0])
-        res.redirect('/admin-insert-throw')
-    } catch (error) {
-        console.error(error);
-        res.status(500).send('Server error')
-    }
-});
 
 // listen
 app.listen(port, () => {
