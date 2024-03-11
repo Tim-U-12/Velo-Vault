@@ -19,6 +19,25 @@ router.get('/login', function(req, res, next) {
 router.post('/login', passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/login'
-  }));
+}));
+
+passport.serializeUser(function(user, cb) {
+process.nextTick(function() {
+    cb(null, { id: user.id, username: user.username });
+});
+});
+
+passport.deserializeUser(function(user, cb) {
+process.nextTick(function() {
+    return cb(null, user);
+});
+});
+
+router.post('/logout', function(req, res, next) {
+req.logout(function(err) {
+    if (err) { return next(err); }
+    res.redirect('/');
+});
+});
 
 export default router;
