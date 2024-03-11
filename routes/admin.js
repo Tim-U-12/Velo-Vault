@@ -1,4 +1,5 @@
 import express from 'express';
+import { pool } from '../app.js';
 const router = express.Router();
 
 router.get('/admin', (req, res) => {
@@ -14,12 +15,12 @@ router.get('/admin-create-user', (req, res) => {
 })
 
 router.post('/admin-create-user', async (req, res) => {
-    const text = 'INSERT INTO users(first_name, last_name, dominant_arm, height_metres, sex) VALUES($1, $2, $3, $4, $5) RETURNING *';
+    const text = 'INSERT INTO users(first_name, last_name, height, dominant_arm, sex) VALUES($1, $2, $3, $4, $5) RETURNING *';
     const values = [
         req.body.first_name,
         req.body.last_name,
+        req.body.height,
         req.body.dominant_arm,
-        req.body.height_metres,
         req.body.sex
     ];
 
@@ -28,7 +29,7 @@ router.post('/admin-create-user', async (req, res) => {
         console.log(result.rows[0])
         res.redirect('/admin-create-user')
     } catch (error) {
-        console.error(err);
+        console.error(error);
         res.status(500).send('Server error')
     }
 });
