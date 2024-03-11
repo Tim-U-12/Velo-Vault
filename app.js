@@ -69,6 +69,7 @@ app.get('/filter', async (req, res) => {
     }
 })
 
+export { pool }
 
 // listen
 app.listen(port, () => {
