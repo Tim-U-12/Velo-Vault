@@ -53,17 +53,17 @@ router.get('/admin-insert-throw', (req, res) => {
 
 router.post('/admin-insert-throw', async(req, res) => {
     if (req.isAuthenticated()) {
-        const text = 'INSERT INTO throws(id, date, throw_speed_kmh) VALUES ($1, $2, $3) RETURNING *'
+        const text = 'INSERT INTO throws(user_id, throw_date, throw_type, throw_speed) VALUES ($1, $2, $3, $4) RETURNING *'
         const currentDate = new Date().toISOString().split('T')[0];
         const values = [
-            req.body.id,
+            req.body.user_id,
             currentDate,
+            req.body.throw_type,
             req.body.throw_speed,
         ];
         
         try {
             const result = await pool.query(text, values);
-            console.log(result.rows[0])
             res.redirect('/admin-insert-throw')
         } catch (error) {
             console.error(error);
