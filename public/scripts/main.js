@@ -1,5 +1,5 @@
 function fetchResults(gender) {
-    const url = `/filter?genderChoice=${gender}`;
+    const url = `/?genderChoice=${gender}`;
     fetch(url)
         .then(response => response.text())
         .then(html => {
