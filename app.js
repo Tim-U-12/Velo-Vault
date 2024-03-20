@@ -39,27 +39,20 @@ app.use('/', adminRouter)
 //main page
 app.get('/', async (req, res) => {
     try {
-        let users;
-        const genderChoice = "any"
-        users = await fetchUsers(pool, genderChoice);
-        res.render("main.ejs", {users: users});
+        const genderChoice = req.query.genderChoice || "any";
+        const users = await fetchUsers(pool, genderChoice);
+        
+        if (req.query.genderChoice) {
+            const usersHtml = await ejs.renderFile('./views/partials/ladder.ejs', { users: users });
+            res.send(usersHtml);
+        } else {
+            res.render("main.ejs", {users: users});
+        }
     } catch (error) {
         console.error('Error fetching data', error);
         res.status(500).send('Error fetching data');
     }
 });
-
-app.get('/filter', async (req, res) => {
-    try {
-        const { genderChoice } = req.query;
-        const users = await fetchUsers(pool, genderChoice);
-        const usersHtml = await ejs.renderFile('./views/partials/ladder.ejs', { users: users });
-        res.send(usersHtml);
-    } catch (error) {
-        console.error('Error fetching data', error);
-        res.status(500).send('Error fetching data');
-    }
-})
 
 // listen
 app.listen(port, () => {
