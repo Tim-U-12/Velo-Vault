@@ -42,10 +42,10 @@ router.route('/admin-create-user')
         }
     })
 
-router.route('/admin-insert-throw')
+router.route('/admin-create-throw')
     .get((req, res) => {
         if (req.isAuthenticated()) {
-            res.render('./admin/insert-throw.ejs')
+            res.render('./admin/create-throw.ejs')
         } else {
             res.redirect('/login')
         }
@@ -64,7 +64,7 @@ router.route('/admin-insert-throw')
             
             try {
                 const result = await pool.query(text, values);
-                res.redirect('/admin-insert-throw')
+                res.redirect('/admin-create-throw')
             } catch (error) {
                 console.error(error);
                 res.status(500).send('Server error')
