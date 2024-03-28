@@ -77,7 +77,12 @@ router.route('/admin-create-throw')
 router.route('/admin-read-user')
     .get((req,res) => {
         if (req.isAuthenticated()) {
-            res.render('./admin/read-user.ejs')
+            if (Object.keys(req.query).length > 0) { 
+                console.log("Successful")
+                res.redirect("./admin-read-user")
+            } else {
+                res.render('./admin/read-user.ejs')
+            }
         } else {
             res.redirect('/login')
         }
