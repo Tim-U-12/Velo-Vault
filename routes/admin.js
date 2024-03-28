@@ -74,4 +74,13 @@ router.route('/admin-create-throw')
         }
     })
 
+router.route('/admin-read-user')
+    .get((req,res) => {
+        if (req.isAuthenticated()) {
+            res.render('./admin/read-user.ejs')
+        } else {
+            res.redirect('/login')
+        }
+    })
+
 export default router;

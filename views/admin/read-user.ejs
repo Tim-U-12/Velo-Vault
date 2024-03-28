@@ -1,2 +1,20 @@
-<%- include('./partials/header.ejs') %>
-<%- include('./partials/footer.ejs') %>
+<%- include('../partials/header.ejs') %>
+
+<h1>READ: User</h1>
+
+<form action="admin-read-user" method="get">
+    <section>
+        <label for="get_user_id">User ID</label>
+        <input type="number" name="get_user_id" id="get_user_id">
+    </section>
+    <section>
+        <label for="get_user_first_name">First Name</label>
+        <input type="text" name="get_user_first_name" id="get_user_first_name">
+    </section>
+    <section>
+        <label for="get_user_last_name">Last Name</label>
+        <input type="text" name="get_user_last_name" id="get_user_last_name">
+    </section>
+</form>
+
+<%- include('../partials/footer.ejs') %>
