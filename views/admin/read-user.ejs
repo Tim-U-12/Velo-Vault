@@ -4,16 +4,17 @@
 
 <form action="/admin-read-user" method="get">
     <section>
-        <label for="get_user_id">User ID</label>
-        <input type="number" name="get_user_id" id="get_user_id">
+        <label for="get_by">Search by:</label>
+        <select name="get_by" id="get_by">
+            <option value="user_id">User ID</option>
+            <option value="first_name">First Name</option>
+            <option value="last_name">Last Name</option>
+            <option value="last_input">Last Input</option>
+        </select>
     </section>
     <section>
-        <label for="get_user_first_name">First Name</label>
-        <input type="text" name="get_user_first_name" id="get_user_first_name">
-    </section>
-    <section>
-        <label for="get_user_last_name">Last Name</label>
-        <input type="text" name="get_user_last_name" id="get_user_last_name">
+        <label for="get_user">Input</label>
+        <input type="text" name="get_user" id="get_user">
     </section>
     <button type="submit">Submit</button>
 </form>
