@@ -1,31 +1,15 @@
-.container {
+/* Tags */
+footer {
     display: flex;
-    flex-direction: column;
+    justify-content: start;
     align-items: center;
+    width: 90%;
+    font-size: smaller;
 }
 
-.rank {
-    text-align: center;
-    width: 20%;
-}
-
-.speed {
-    width: 40%;
-}
-
-#filter-by-sex {
+footer div {
     display: flex;
-    justify-content: space-evenly;
-    width: 50%;
-    margin-bottom: 0.5rem;
-}
-
-#ladder-results {
-    display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-    width: 100%;
 }
 
 table {
@@ -58,4 +42,42 @@ input[type="radio"] {
 /* This will make the radio buttons and their labels inline */
 label + input[type='radio'] + label {
 display: inline;
+}
+
+/* Classes */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 1720px;
+}
+
+.rank {
+    text-align: center;
+    width: 20%;
+}
+
+.speed {
+    width: 40%;
+}
+
+/* ID */
+#footer-hr {
+    margin-top: 50px;
+}
+
+#filter-by-sex {
+    display: flex;
+    justify-content: space-evenly;
+    width: 50%;
+    margin-bottom: 0.5rem;
+}
+
+#ladder-results {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
 }
