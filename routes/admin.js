@@ -78,23 +78,20 @@ router.route('/admin-create-throw')
 router.route('/admin-read-user')
     .get(async (req,res) => {
         if (req.isAuthenticated()) {
+            let users = {}
             if (Object.keys(req.query).length > 0) { 
                 const column = getSafeColumnName(req.query.get_by)
                 const text = `SELECT * FROM users WHERE ${column}=$1`;
-                const values = [
-                    req.query.get_user,
-                ]
+                const values = [req.query.get_user]
                 try {
                     const result = await pool.query(text, values)
-                    console.log(result)
-                    res.redirect("/admin-read-user")
+                    users = result.rows
                 } catch (error) {
-                    console.log("Read Unsuccessful")
-                    res.render('./admin/read-user.ejs')
+                    console.error('Error fetching data', error);
+                    res.status(500).send('Error fetching data')
                 }
-            } else {
-                res.render('./admin/read-user.ejs')
             }
+            res.render("./admin/read-user.ejs", { users })
         } else {
             res.redirect('/login')
         }
