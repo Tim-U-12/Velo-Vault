@@ -36,4 +36,4 @@ function gracefulShutdown(pool) {
     });
 }
 
-export { fetchUsers , gracefulShutdown };
+export { fetchUsers , gracefulShutdown , getSafeColumnName };
