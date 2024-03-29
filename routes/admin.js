@@ -79,16 +79,23 @@ router.route('/admin-read-user')
     .get(async (req,res) => {
         if (req.isAuthenticated()) {
             let users = {}
-            if (Object.keys(req.query).length > 0) { 
-                const column = getSafeColumnName(req.query.get_by)
-                const text = `SELECT * FROM users WHERE ${column}=$1`;
-                const values = [req.query.get_user]
-                try {
-                    const result = await pool.query(text, values)
+            if (Object.keys(req.query).length > 0) {
+                
+                if (req.query.get_by == "last_input") {
+                    const text = "SELECT * FROM USERS ORDER BY user_id DESC LIMIT 1"
+                    const result = await pool.query(text)
                     users = result.rows
-                } catch (error) {
-                    console.error('Error fetching data', error);
-                    res.status(500).send('Error fetching data')
+                } else {
+                    const column = getSafeColumnName(req.query.get_by)
+                    const text = `SELECT * FROM users WHERE ${column}=$1`;
+                    const values = [req.query.get_user]
+                    try {
+                        const result = await pool.query(text, values)
+                        users = result.rows
+                    } catch (error) {
+                        console.error('Error fetching data', error);
+                        res.status(500).send('Error fetching data')
+                    }
                 }
             }
             res.render("./admin/read-user.ejs", { users })
