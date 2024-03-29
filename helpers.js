@@ -18,6 +18,16 @@ ORDER BY throw_speed DESC`;
     return result.rows
 }
 
+const columnWhiteList = ["user_id", "first_name", "last_name"]
+
+function getSafeColumnName(input) {
+    if (columnWhiteList.includes(input)) {
+        return input;
+    } else {
+        throw new Error("Invalid column name")
+    }
+}
+
 function gracefulShutdown(pool) {
     console.log("Closing pool and shutting down the server...");
     pool.end(() => {
