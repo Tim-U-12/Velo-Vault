@@ -1,5 +1,6 @@
 import express from 'express';
 import { pool } from '../models/postgres_db.js';
+import { getSafeColumnName } from "../helpers.js"
 const router = express.Router();
 
 router.get('/admin', (req, res) => {
@@ -75,11 +76,22 @@ router.route('/admin-create-throw')
     })
 
 router.route('/admin-read-user')
-    .get((req,res) => {
+    .get(async (req,res) => {
         if (req.isAuthenticated()) {
             if (Object.keys(req.query).length > 0) { 
-                console.log("Successful")
-                res.redirect("./admin-read-user")
+                const column = getSafeColumnName(req.query.get_by)
+                const text = `SELECT * FROM users WHERE ${column}=$1`;
+                const values = [
+                    req.query.get_user,
+                ]
+                try {
+                    const result = await pool.query(text, values)
+                    console.log(result)
+                    res.redirect("/admin-read-user")
+                } catch (error) {
+                    console.log("Read Unsuccessful")
+                    res.render('./admin/read-user.ejs')
+                }
             } else {
                 res.render('./admin/read-user.ejs')
             }
