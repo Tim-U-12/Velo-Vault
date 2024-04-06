@@ -1,21 +1,4 @@
 /* Tags */
-footer {
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    width: 90%;
-    font-size: smaller;
-}
-
-footer div {
-    display: flex;
-    align-items: center;
-}
-
-table {
-    margin: 0 auto; /* Centers the table horizontally */
-}
-
 section {
     margin-bottom:0.5rem;
 }
@@ -51,33 +34,36 @@ display: inline;
     align-items: center;
     width: 100%;
     max-width: 1720px;
+    min-height: 100vh;
 }
 
 .rank {
     text-align: center;
-    width: 20%;
+    width: 25%;
 }
 
-.speed {
-    width: 40%;
+.velocity {
+    width: 25%;
 }
 
 /* ID */
-#footer-hr {
-    margin-top: 50px;
+#footer {
+    margin-top: auto;
+    width: 90%;
+}
+
+#content {
+    width: 90%;
 }
 
 #filter-by-sex {
     display: flex;
     justify-content: space-evenly;
-    width: 50%;
     margin-bottom: 0.5rem;
 }
 
 #ladder-results {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
     width: 100%;
 }
