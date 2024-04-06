@@ -18,15 +18,17 @@ ORDER BY throw_speed DESC`;
     return result.rows
 }
 
-function getSafeColumnName(input, columnWhiteList) {
-    if (columnWhiteList.includes(input)) {
+function getSafeName(input, whiteList) {
+    if (whiteList.includes(input)) {
         return input;
     } else {
         throw new Error("Invalid column name")
     }
 }
 
-function getRow(table, colName, value) {}
+function getRows(table, colName) {
+    return `SELECT * FROM ${table} WHERE ${colName}=$1`
+}
 
 function gracefulShutdown(pool) {
     console.log("Closing pool and shutting down the server...");
@@ -36,4 +38,4 @@ function gracefulShutdown(pool) {
     });
 }
 
-export { fetchUsers , gracefulShutdown , getSafeColumnName };
+export { fetchUsers , gracefulShutdown , getSafeName , getRows };
