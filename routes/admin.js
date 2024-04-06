@@ -86,7 +86,8 @@ router.route('/admin-read-user')
                     const result = await pool.query(text)
                     users = result.rows
                 } else {
-                    const column = getSafeColumnName(req.query.get_by)
+                    const columnWhiteList = ["user_id", "first_name", "last_name"]
+                    const column = getSafeColumnName(req.query.get_by, columnWhiteList)
                     const text = `SELECT * FROM users WHERE ${column}=$1`;
                     const values = [req.query.get_user]
                     try {
