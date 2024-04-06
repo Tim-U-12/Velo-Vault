@@ -1,6 +1,7 @@
 import express from 'express';
 import { pool } from '../models/postgres_db.js';
-import { getSafeColumnName } from "../helpers.js"
+import { getSafeName } from "../helpers.js"
+import { getRows } from "../helpers.js"
 const router = express.Router();
 
 router.get('/admin', (req, res) => {
@@ -87,16 +88,11 @@ router.route('/admin-read-user')
                     users = result.rows
                 } else {
                     const columnWhiteList = ["user_id", "first_name", "last_name"]
-                    const column = getSafeColumnName(req.query.get_by, columnWhiteList)
-                    const text = `SELECT * FROM users WHERE ${column}=$1`;
-                    const values = [req.query.get_user]
-                    try {
-                        const result = await pool.query(text, values)
-                        users = result.rows
-                    } catch (error) {
-                        console.error('Error fetching data', error);
-                        res.status(500).send('Error fetching data')
-                    }
+                    const column = getSafeName(req.query.get_by, columnWhiteList)
+                    const text = getRows("users", column)
+                    const value = req.query.get_user
+                    const result = await pool.query(text, [value]) 
+                    users = result.rows
                 }
             }
             res.render("./admin/read-user.ejs", { users })
