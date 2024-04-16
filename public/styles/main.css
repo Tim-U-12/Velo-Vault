@@ -54,11 +54,11 @@ display: inline;
 
 #content {
     width: 90%;
+    flex: 1;
 }
 
 #footer {
     font-size: 0.5em;
-    margin-top: auto;
     width: 90%;
 }
 
