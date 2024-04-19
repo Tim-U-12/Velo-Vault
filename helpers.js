@@ -7,11 +7,11 @@ async function fetchUsers(pool, genderChoice) {
     }
 
     const text = `
-SELECT u.first_name, u.last_name, MAX(t.throw_speed) AS throw_speed
+SELECT u.first_name, u.last_name, t.throw_type, MAX(t.throw_speed) AS throw_speed
 FROM users u
 JOIN throws t ON t.user_id = u.user_id
 WHERE u.sex = ANY($1::text[])
-GROUP BY u.user_id
+GROUP BY u.user_id, t.throw_type
 ORDER BY throw_speed DESC`;
 
     const result = await pool.query(text, [genderValues])
