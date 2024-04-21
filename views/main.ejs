@@ -1,7 +1,6 @@
 <%- include('./partials/header.ejs') %>
 <div class="content">
     <div id="filter-by-sex">
-        <p>Filter By: </p>
         <button onclick="fetchResults('any')">All</button>
         <button onclick="fetchResults('female')">Female</button>
         <button onclick="fetchResults('male')">Male</button>
@@ -12,16 +11,16 @@
             <thead>
                 <tr>
                     <td class="rank">Rank</td>
-                    <td>Name</td>
-                    <td>Throw type</td>
-                    <td class="velocity">Velocity</td>
+                    <td class="name">Name</td>
+                    <td class="type">Type</td>
+                    <td class="velo">Velocity</td>
                 </tr>
             </thead>
             <tbody>
                 <% let counter = 1; %>
                 <% users.forEach(function(row) { %>
                     <tr>
-                        <td class="rank"><%= counter %></td>
+                        <td><%= counter %></td>
                         <td><%= row.first_name %> <%= row.last_name %></td>
                         <td><%= row.throw_type %></td>
                         <td><%= row.throw_speed %></td>
