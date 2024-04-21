@@ -6,19 +6,14 @@ async function fetchUsers(pool, genderChoice, typeChoice) {
         genderValues = [genderChoice];
     }
 
-    // Initialize an array to hold parameters for the SQL query
     const params = [genderValues];
-    // Start building the WHERE clause
     let whereClauses = "u.sex = ANY($1::text[])";
 
-    // Modify the WHERE clause based on typeChoice, if it's not "both"
     if (typeChoice !== 'both') {
-        // Add throw_type condition to the WHERE clause
         whereClauses += ` AND t.throw_type = $2`;
-        params.push(typeChoice); // Add typeChoice as the second parameter
+        params.push(typeChoice);
     }
 
-    // Update the SQL query to include the dynamic WHERE clause
     const text = `
 SELECT u.first_name, u.last_name, t.throw_type, MAX(t.throw_speed) AS throw_speed
 FROM users u
