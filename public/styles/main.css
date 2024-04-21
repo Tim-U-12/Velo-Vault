@@ -81,7 +81,9 @@ thead {
     width: 4rem;
     height: 1.5rem;
     border-radius: 40px;
-    border: 2px solid grey;
+    border: 2px solid lightgray;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 0.75rem;
 }
 
 #ladder-results {
