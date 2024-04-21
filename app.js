@@ -40,7 +40,8 @@ app.use('/', adminRouter)
 app.get('/', async (req, res) => {
     try {
         const genderChoice = req.query.genderChoice || "any";
-        const users = await fetchUsers(pool, genderChoice);
+        const typeChoice = req.query.typeChoice || "both";
+        const users = await fetchUsers(pool, genderChoice, typeChoice);
         
         if (req.query.genderChoice) {
             const usersHtml = await ejs.renderFile('./views/partials/ladder.ejs', { users: users });

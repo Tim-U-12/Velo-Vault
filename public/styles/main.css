@@ -9,6 +9,7 @@ ul {
 
 h1 {
     color: black;
+    font-size: 2rem;
 }
 
 label {
@@ -25,25 +26,28 @@ label + input[type='radio'] + label {
 display: inline;
 }
 
+thead {
+    font-weight: bold;
+    background-color: lightgrey;
+}
+
 /* Classes */
 .container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
-    max-width: 1720px;
     min-height: 100vh;
     margin: 0;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Consolas, 'Courier New', monospace;
+}
+
+.type, .velo {
+    width: 25%;
 }
 
 .rank {
-    text-align: center;
-    width: 25%;
-}
-
-.velocity {
-    width: 25%;
+    width: 10%;
 }
 
 /* ID */
@@ -53,23 +57,55 @@ display: inline;
 }
 
 #content {
-    width: 90%;
+    width: 80%;
     flex: 1;
+    font-size: 0.75rem;
+    max-width: 1200px;
 }
 
 #footer {
-    font-size: 0.5em;
+    font-size: 0.75em;
     width: 90%;
 }
 
 #filter-by-sex {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     margin-bottom: 0.5rem;
+}
+
+#filter-by-sex > button {
+    background-color: white;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: 4rem;
+    height: 1.5rem;
+    border-radius: 40px;
+    border: 2px solid lightgray;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 0.75rem;
 }
 
 #ladder-results {
     display: flex;
     flex-direction: column;
-    width: 100%;
+}
+
+@media(max-width: 400px){
+    #filter-by-sex > button {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        width: 3rem;
+        height: 1.25rem;
+        border-radius: 40px;
+        font-size: 0.5rem;
+    }
+
+    #ladder-results {
+        font-size: 0.5rem;
+    }
+
+    #trademark {
+        font-size: 0.5rem;
+    }
 }
