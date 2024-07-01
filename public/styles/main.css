@@ -1,9 +1,4 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
+/* Tags */
 section {
     margin-bottom:0.5rem;
 }
@@ -13,7 +8,8 @@ ul {
 }
 
 h1 {
-    color: orange;
+    color: black;
+    font-size: 2rem;
 }
 
 label {
@@ -28,4 +24,88 @@ input[type="radio"] {
 /* This will make the radio buttons and their labels inline */
 label + input[type='radio'] + label {
 display: inline;
+}
+
+thead {
+    font-weight: bold;
+    background-color: lightgrey;
+}
+
+/* Classes */
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    margin: 0;
+    font-family: Consolas, 'Courier New', monospace;
+}
+
+.type, .velo {
+    width: 25%;
+}
+
+.rank {
+    width: 10%;
+}
+
+/* ID */
+#header {
+    width: 100%;
+    text-align: center;
+}
+
+#content {
+    width: 80%;
+    flex: 1;
+    font-size: 0.75rem;
+    max-width: 1200px;
+}
+
+#footer {
+    font-size: 0.75em;
+    width: 90%;
+}
+
+#filter-by-sex {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+#filter-by-sex > button {
+    background-color: white;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    width: 4rem;
+    height: 1.5rem;
+    border-radius: 40px;
+    border: 2px solid lightgray;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 0.75rem;
+}
+
+#ladder-results {
+    display: flex;
+    flex-direction: column;
+}
+
+@media(max-width: 400px){
+    #filter-by-sex > button {
+        margin-left: 0.5rem;
+        margin-right: 0.5rem;
+        width: 3rem;
+        height: 1.25rem;
+        border-radius: 40px;
+        font-size: 0.5rem;
+    }
+
+    #ladder-results {
+        font-size: 0.5rem;
+    }
+
+    #trademark {
+        font-size: 0.5rem;
+    }
 }

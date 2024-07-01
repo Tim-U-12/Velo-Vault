@@ -2,18 +2,22 @@
 <!-- Main HUB -->
 <%- include('./partials/header.ejs') %>
 
-<h1>ADMIN</h1>
-
-<form action="/admin-create-user" method="get">
-    <section><button type="submit">CREATE: User</button></section>
-</form>
-
-<form action="/admin-insert-throw" method="get">
-    <section><button type="submit">INSERT: Throw</button></section>
-</form>
-
-<form action="/logout" method="get">
-    <section><button type="submit">Logout</button></section>
-</form>
+<div class="container">
+    <form action="/admin-create-user" method="get">
+        <section><button type="submit">CREATE: User</button></section>
+    </form>
+    
+    <form action="/admin-create-throw" method="get">
+        <section><button type="submit">CREATE: Throw</button></section>
+    </form>
+    
+    <form action="/admin-read-user" method="get">
+        <section><button type="submit">READ: User</button></section>
+    </form>
+    
+    <form action="/logout" method="post">
+        <section><button type="submit">Logout</button></section>
+    </form>
+</div>
 
 <%- include('./partials/footer.ejs') %>

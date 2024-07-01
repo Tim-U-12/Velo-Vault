@@ -1,0 +1,47 @@
+<%- include('../partials/header.ejs') %>
+
+<div class="container">
+    <h2>READ: User</h2>
+
+    <form action="/admin-read-user" method="get">
+        <section>
+            <label for="get_by">Search by:</label>
+            <select name="get_by" id="get_by">
+                <option value="user_id">User ID</option>
+                <option value="first_name">First Name</option>
+                <option value="last_name">Last Name</option>
+                <option value="last_input">Last Input</option>
+            </select>
+        </section>
+        <section>
+            <label for="get_user">Input</label>
+            <input type="text" name="get_user" id="get_user">
+        </section>
+        <button type="submit">Submit</button>
+    </form>
+    
+    <% if (Array.isArray(users)) {  %>
+        <div id="get_users">
+            <table>
+                <thead>
+                    <tr>
+                        <td>User ID</td>
+                        <td>First Name</td>
+                        <td>Last Name</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% users.forEach(function(row) { %>
+                        <tr>
+                            <td><%= row.user_id %></td>
+                            <td><%= row.first_name %></td>
+                            <td><%= row.last_name %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../partials/footer.ejs') %>

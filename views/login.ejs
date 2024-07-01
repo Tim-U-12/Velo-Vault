@@ -1,18 +1,19 @@
 <%- include('./partials/header.ejs') %>
-<H1>Login</H1>
 
-<form action="/login" method="post">
-    <section>
-        <label for="username">Username: </label>
-        <input type="text" placeholder="Username" name="username" id="username">
-    </section>
+<div class="container">
+    <form action="/login" method="post">
+        <section>
+            <label for="username">Username: </label>
+            <input type="text" placeholder="Username" name="username" id="username">
+        </section>
 
-    <section>
-        <label for="password">Password : </label>
-        <input type="password" placeholder="Password" name="password" id="username">
-    </section>
+        <section>
+            <label for="password">Password : </label>
+            <input type="password" placeholder="Password" name="password" id="password">
+        </section>
 
-    <button type="submit">Submit</button>
-</form>
+        <button type="submit">Submit</button>
+    </form>
+</div>
 
 <%- include('./partials/footer.ejs') %>

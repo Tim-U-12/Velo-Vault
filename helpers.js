@@ -1,13 +1,41 @@
-async function fetchUsers(pool) {
-    const users = await pool.query("SELECT u.first_name, u.last_name, MAX(t.throw_speed_kmh) AS max_throw_speed_kmh FROM users u, throws t WHERE t.id = u.id GROUP BY u.id ORDER BY max_throw_speed_kmh DESC")
-    return users.rows
+async function fetchUsers(pool, genderChoice, typeChoice) {
+    let genderValues;
+    if (genderChoice === 'any') {
+        genderValues = ['female', 'male'];
+    } else {
+        genderValues = [genderChoice];
+    }
+
+    const params = [genderValues];
+    let whereClauses = "u.sex = ANY($1::text[])";
+
+    if (typeChoice !== 'both') {
+        whereClauses += ` AND t.throw_type = $2`;
+        params.push(typeChoice);
+    }
+
+    const text = `
+SELECT u.first_name, u.last_name, t.throw_type, MAX(t.throw_speed) AS throw_speed
+FROM users u
+JOIN throws t ON t.user_id = u.user_id
+WHERE ${whereClauses}
+GROUP BY u.user_id, t.throw_type
+ORDER BY throw_speed DESC`;
+
+    const result = await pool.query(text, params);
+    return result.rows;
 }
 
-function isAuthenticated(req, res, next) {
-    if (!req.session.userID) {
-        return res.redirect('/login');
+function getSafeName(input, whiteList) {
+    if (whiteList.includes(input)) {
+        return input;
+    } else {
+        throw new Error("Invalid column name")
     }
-    next();
+}
+
+function getRows(table, colName) {
+    return `SELECT * FROM ${table} WHERE ${colName}=$1`
 }
 
 function gracefulShutdown(pool) {
@@ -18,4 +46,4 @@ function gracefulShutdown(pool) {
     });
 }
 
-export { fetchUsers , isAuthenticated , gracefulShutdown };
+export { fetchUsers , gracefulShutdown , getSafeName , getRows };

@@ -1,0 +1,22 @@
+<table>
+    <thead>
+        <tr>
+            <td class="rank">Rank</td>
+            <td class="name">Name</td>
+            <td class="type">Type</td>
+            <td class="velo">Velocity</td>
+        </tr>
+    </thead>
+    <tbody>
+        <% let counter = 1; %>
+        <% users.forEach(function(row) { %>
+            <tr>
+                <td><%= counter %></td>
+                <td><%= row.first_name %> <%= row.last_name %></td>
+                <td><%= row.throw_type %></td>
+                <td><%= row.throw_speed %></td>
+            </tr>
+            <% counter++; %>
+        <% }) %>
+    </tbody>
+</table>

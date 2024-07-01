@@ -1,19 +1,35 @@
 <%- include('./partials/header.ejs') %>
-<h1>Top Throws</h1>
-
-<div>
-    <span>sort by: </span>
-    <a>Mixed</a>
-    <a>Female</a>
-    <a>Male</a>
-</div>
-<div>
-    <ul>
-        <% let counter = 1; %>
-        <% users.forEach(function(row) {%>
-            <li><%= counter %>. <%= row.first_name %> <%= row.last_name %>: <%= row.max_throw_speed_kmh %> km/h</li>
-            <% counter++; %>
-        <% }); %>
-    </ul>
+<div class="content">
+    <div id="filter-by-sex">
+        <button onclick="fetchResults('any')">All</button>
+        <button onclick="fetchResults('female')">Female</button>
+        <button onclick="fetchResults('male')">Male</button>
+        <button id="typeButton" onclick="cycleType()">Type</button>
+    </div>
+    <div id="ladder-results">
+        <!-- Filtered results will appear here -->
+        <table>
+            <thead>
+                <tr>
+                    <td class="rank">Rank</td>
+                    <td class="name">Name</td>
+                    <td class="type">Type</td>
+                    <td class="velo">Velocity</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% let counter = 1; %>
+                <% users.forEach(function(row) { %>
+                    <tr>
+                        <td><%= counter %></td>
+                        <td><%= row.first_name %> <%= row.last_name %></td>
+                        <td><%= row.throw_type %></td>
+                        <td><%= row.throw_speed %></td>
+                    </tr>
+                    <% counter++; %>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
 </div>
 <%- include('./partials/footer.ejs') %>
