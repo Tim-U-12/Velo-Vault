@@ -1,4 +1,12 @@
 <%- include('./partials/header.ejs') %>
+<%- include('./partials/navigationbar.ejs') %>
+<link rel="stylesheet" href="./styles/main.css">
+
+
+<header id="header">
+    <h1>Top Throwing Speeds</h1>
+</header>
+
 <div class="content">
     <div id="filter-by-sex">
         <button onclick="fetchResults('any')">All</button>
@@ -32,4 +40,5 @@
         </table>
     </div>
 </div>
+<script src="/scripts/main.js"></script>
 <%- include('./partials/footer.ejs') %>

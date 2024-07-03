@@ -1,0 +1,28 @@
+.top-nav-bar {
+    display: flex;
+    flex-direction: row;
+    min-height: 30px;
+    max-height: 50px;
+    height: 4vh;
+    width: 90%;
+    margin-top: 5px;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border: 1px solid Black;
+    overflow: hidden;
+}
+
+.top-nav-logo {
+    margin-left: 10px;
+}
+
+.nav-links > a{
+    margin-right: 10px;
+}
+
+a:link, a:visited {
+    color: black;
+    text-decoration: none;
+}
