@@ -13,7 +13,7 @@ import { pool } from './models/postgres_db.js';
 import 'dotenv/config';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 // middle ware
 app.use(bodyParser.urlencoded({extended:true}));
