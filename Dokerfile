@@ -2,7 +2,10 @@
 FROM node:14
 
 # Set the working directory in the container
-WORKDIR /.
+WORKDIR /usr/src/app
+
+# Copy the package.json and package-lock.json files to the working directory
+COPY package*.json ./
 
 # Install any needed dependencies
 RUN npm install
@@ -13,5 +16,5 @@ COPY . .
 # Make port 3000 available to the world outside this container
 EXPOSE 3000
 
-# Define the command to run the application
-CMD [ "npm", "start" ]
+# Define the entry point for the container
+CMD ["npm", "start"]
