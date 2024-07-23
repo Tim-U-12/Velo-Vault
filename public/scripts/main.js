@@ -1,7 +1,7 @@
-let currentType = 'both'
+let currentType = 'Both'
 
 function cycleType(){
-    const types = ['both', 'running', 'standing'];
+    const types = ['Both', 'Running', 'Standing'];
     currentType = types[(types.indexOf(currentType) + 1) % types.length];
     document.getElementById('typeButton').textContent = currentType;
     fetchResults(currentGender, currentType);

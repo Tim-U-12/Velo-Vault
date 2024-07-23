@@ -42,6 +42,13 @@ thead {
     font-family: Consolas, 'Courier New', monospace;
 }
 
+.content {
+    width: 90%;
+    flex: 1;
+    font-size: 1rem;
+    max-width: 1500px;
+}
+
 .type, .velo {
     width: 25%;
 }
@@ -52,15 +59,8 @@ thead {
 
 /* ID */
 #header {
-    width: 100%;
+    width: 90%;
     text-align: center;
-}
-
-#content {
-    width: 80%;
-    flex: 1;
-    font-size: 0.75rem;
-    max-width: 1200px;
 }
 
 #footer {
@@ -78,7 +78,7 @@ thead {
     background-color: white;
     margin-left: 1rem;
     margin-right: 1rem;
-    width: 4rem;
+    width: 4.75rem;
     height: 1.5rem;
     border-radius: 40px;
     border: 2px solid lightgray;
