@@ -21,3 +21,14 @@ function fetchResults(gender = currentGender, type = currentType) {
             console.error('There was a problem with the fetch operation:', error);
         });
 }
+
+function highlightButton(button, buttonContainerSelector) {
+     // Remove 'selected' class from all buttons within the specified container
+    var buttons = document.querySelectorAll(buttonContainerSelector + ' button');
+    buttons.forEach(function(btn) {
+        btn.classList.remove('selected-sex');
+    });
+
+    // Add 'selected' class to the clicked button
+    button.classList.add('selected-sex');
+}

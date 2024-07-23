@@ -9,9 +9,9 @@
 
 <div class="content">
     <div id="filter-by-sex">
-        <button onclick="fetchResults('any')">All</button>
-        <button onclick="fetchResults('female')">Female</button>
-        <button onclick="fetchResults('male')">Male</button>
+        <button onclick="fetchResults('any'); highlightButton(this, '#filter-by-sex')">All</button>
+        <button onclick="fetchResults('female'); highlightButton(this, '#filter-by-sex')">Female</button>
+        <button onclick="fetchResults('male'); highlightButton(this, '#filter-by-sex')">Male</button>
         <button id="typeButton" onclick="cycleType()">Type</button>
     </div>
     <div id="ladder-results">
@@ -22,7 +22,7 @@
                     <td class="rank">Rank</td>
                     <td class="name">Name</td>
                     <td class="type">Type</td>
-                    <td class="velo">Velocity</td>
+                    <td class="velo">Velocity (km/h)</td>
                 </tr>
             </thead>
             <tbody>
