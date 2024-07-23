@@ -1,4 +1,7 @@
 async function fetchUsers(pool, genderChoice, typeChoice) {
+    genderChoice = genderChoice.toLowerCase();
+    typeChoice = typeChoice.toLowerCase();
+
     let genderValues;
     if (genderChoice === 'any') {
         genderValues = ['female', 'male'];
