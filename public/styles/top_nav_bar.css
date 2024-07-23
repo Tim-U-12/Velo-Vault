@@ -12,6 +12,8 @@
 
     border: 1px solid Black;
     overflow: hidden;
+
+    box-sizing: border-box;
 }
 
 .top-nav-logo {

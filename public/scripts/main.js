@@ -10,8 +10,7 @@ function cycleType(){
 let currentGender = 'any';
 
 function fetchResults(gender = currentGender, type = currentType) {
-    currentGender = gender;
-    currentType = type;
+    console.log(currentType)
     const url = `/?genderChoice=${gender}&typeChoice=${type}`;
     fetch(url)
         .then(response => response.text())
