@@ -3,7 +3,7 @@ async function fetchUsers(pool, genderChoice, typeChoice) {
     typeChoice = typeChoice.toLowerCase();
 
     let genderValues;
-    if (genderChoice === 'any') {
+    if (genderChoice === 'all') {
         genderValues = ['female', 'male'];
     } else {
         genderValues = [genderChoice];

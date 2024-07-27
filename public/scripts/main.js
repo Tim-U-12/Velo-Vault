@@ -1,4 +1,5 @@
-let currentType = 'Both'
+let currentType = 'Both';
+let currentGender = 'all';
 
 function cycleType(){
     const types = ['Both', 'Running', 'Standing'];
@@ -7,10 +8,8 @@ function cycleType(){
     fetchResults(currentGender, currentType);
 }
 
-let currentGender = 'any';
-
 function fetchResults(gender = currentGender, type = currentType) {
-    console.log(currentType)
+    console.log(`Gender: ${gender}, Type: ${type}`);
     const url = `/?genderChoice=${gender}&typeChoice=${type}`;
     fetch(url)
         .then(response => response.text())
@@ -31,4 +30,6 @@ function highlightButton(button, buttonContainerSelector) {
 
     // Add 'selected' class to the clicked button
     button.classList.add('selected-sex');
+    currentGender = button.textContent.toLowerCase(); // Update currentGender based on the clicked button
+    fetchResults(currentGender, currentType); // Fetch results with the updated gender and current type
 }
