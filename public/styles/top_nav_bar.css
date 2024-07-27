@@ -32,5 +32,6 @@ a:link, a:visited {
 @media(max-width: 400px) {
     .top-nav-bar {
         font-size: 0.75rem;
+        width: 95%;
     }
 }

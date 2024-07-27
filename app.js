@@ -39,7 +39,7 @@ app.use('/', adminRouter)
 //main page
 app.get('/', async (req, res) => {
     try {
-        const genderChoice = req.query.genderChoice || "any";
+        const genderChoice = req.query.genderChoice || "all";
         const typeChoice = req.query.typeChoice || "both";
         const users = await fetchUsers(pool, genderChoice, typeChoice);
         
