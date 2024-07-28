@@ -5,6 +5,7 @@
     max-height: 50px;
     height: 4vh;
     width: 90%;
+    max-width: 1500px;
     margin-top: 5px;
 
     align-items: center;
