@@ -12,13 +12,13 @@ passport.use(new Strategy(function verify(username, password, cb) {
     }
 }));
 
-router.get('/login', function(req, res, next) {
+router.get('/admin-login', function(req, res, next) {
     res.render('login.ejs');
 });
 
-router.post('/login', passport.authenticate('local', {
+router.post('/admin-login', passport.authenticate('local', {
     successRedirect: '/admin',
-    failureRedirect: '/login'
+    failureRedirect: '/admin-login'
 }));
 
 passport.serializeUser(function(user, cb) {
@@ -33,7 +33,7 @@ process.nextTick(function() {
 });
 });
 
-router.post('/logout', function(req, res, next) {
+router.post('/admin-logout', function(req, res, next) {
 req.logout(function(err) {
     if (err) { return next(err); }
     res.redirect('/');

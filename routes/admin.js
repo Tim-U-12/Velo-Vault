@@ -8,7 +8,7 @@ router.get('/admin', (req, res) => {
     if (req.isAuthenticated()) {
         res.render('admin.ejs')
     } else {
-        res.redirect('/login')
+        res.redirect('/admin-login')
     }
 })
 
@@ -17,7 +17,7 @@ router.route('/admin-create-user')
         if (req.isAuthenticated()) {
             res.render('./admin/create-user.ejs')
         } else {
-            res.redirect('/login')
+            res.redirect('/admin-login')
         }
     })
     .post(async (req, res) => {
@@ -40,7 +40,7 @@ router.route('/admin-create-user')
                 res.status(500).send('Server error')
             }
         } else {
-            res.redirect('/login')
+            res.redirect('/admin-login')
         }
     })
 
@@ -49,7 +49,7 @@ router.route('/admin-create-throw')
         if (req.isAuthenticated()) {
             res.render('./admin/create-throw.ejs')
         } else {
-            res.redirect('/login')
+            res.redirect('/admin-login')
         }
         
     })
@@ -72,7 +72,7 @@ router.route('/admin-create-throw')
                 res.status(500).send('Server error')
             }
         } else {
-            res.redirect('/login')
+            res.redirect('/admin-login')
         }
     })
 
@@ -97,7 +97,7 @@ router.route('/admin-read-user')
             }
             res.render("./admin/read-user.ejs", { users })
         } else {
-            res.redirect('/login')
+            res.redirect('/admin-login')
         }
     })
 
