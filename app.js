@@ -7,6 +7,7 @@ import connectPgSimple from 'connect-pg-simple';
 
 import authRouter from './routes/auth.js';
 import adminRouter from './routes/admin.js';
+import aboutRouter from './routes/about.js';
 import { fetchUsers } from './helpers.js';
 import { gracefulShutdown } from './helpers.js';
 import { pool } from './models/postgres_db.js';
@@ -35,6 +36,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use('/', authRouter)
 app.use('/', adminRouter)
+app.use('/', aboutRouter)
 
 //main page
 app.get('/', async (req, res) => {
