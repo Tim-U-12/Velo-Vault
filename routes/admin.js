@@ -51,7 +51,7 @@ router.route('/admin-create-user')
             try {
                 const result = await pool.query(text, values);
                 console.log(result.rows[0])
-                res.redirect('/admin-create-user')
+                res.redirect('/admin')
             } catch (error) {
                 console.error(error);
                 res.status(500).send('Server error')
