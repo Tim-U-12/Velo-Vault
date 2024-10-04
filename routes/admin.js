@@ -5,23 +5,35 @@ import { getRows } from "../helpers.js"
 import { getAllUsers } from '../helpers.js';
 const router = express.Router();
 
-router.get('/admin', async (req, res) => {
-    if (req.isAuthenticated()) {
-        const users = await getAllUsers(pool)
-        res.render('admin.ejs', {users : users})
-    } else {
-        res.redirect('/admin-login')
-    }
-})
-
-router.route('/admin-create-user')
-    .get((req,res) => {
+router.route('/admin')
+    .get(async (req, res) => {
         if (req.isAuthenticated()) {
-            res.render('./admin/create-user.ejs')
+            const users = await getAllUsers(pool)
+            res.render('admin.ejs', {users : users})
         } else {
             res.redirect('/admin-login')
         }
-    })
+    }
+)
+
+router.route('/user-profile')
+    .get(async (req, res) => {
+        if (req.isAuthenticated()) {
+            const userID = req.query.id;
+            const userName = req.query.name;
+            // query the db for all user's throws
+            const text = "SELECT * FROM throws WHERE throws.user_id = $1";
+            const params = [userID];
+            const results = await pool.query(text, params);
+            // render the user profile with all the information
+            res.render('./admin/user-profile.ejs')
+        } else {
+            res.redirect('/admin-login')
+        }
+    }
+)
+
+router.route('/admin-create-user')
     .post(async (req, res) => {
         if (req.isAuthenticated()) {
             const text = 'INSERT INTO users(first_name, last_name, height, dominant_arm, sex) VALUES($1, $2, $3, $4, $5) RETURNING *';
@@ -32,7 +44,6 @@ router.route('/admin-create-user')
                 req.body.dominant_arm,
                 req.body.sex
             ];
-        
             try {
                 const result = await pool.query(text, values);
                 console.log(result.rows[0])

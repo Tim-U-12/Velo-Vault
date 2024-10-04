@@ -9,6 +9,12 @@
     min-width: 150px;
 }
 
+#admin-parameters button[type="submit"] {
+    flex: 0 0 auto;
+    margin-top: 20px;
+    width: auto;
+    align-self: flex-start;
+}
 
 @media(max-width: 400px){
     #admin-parameters {
