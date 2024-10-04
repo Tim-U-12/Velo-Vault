@@ -26,7 +26,11 @@ router.route('/user-profile')
             const params = [userID];
             const results = await pool.query(text, params);
             // render the user profile with all the information
-            res.render('./admin/user-profile.ejs')
+            res.render('./admin/user-profile.ejs', {
+                userThrows: results.rows,
+                userID: userID, 
+                name: userName
+            });
         } else {
             res.redirect('/admin-login')
         }
@@ -58,14 +62,6 @@ router.route('/admin-create-user')
     })
 
 router.route('/admin-create-throw')
-    .get((req, res) => {
-        if (req.isAuthenticated()) {
-            res.render('./admin/create-throw.ejs')
-        } else {
-            res.redirect('/admin-login')
-        }
-        
-    })
     .post(async (req, res) => {
         if (req.isAuthenticated()) {
             const text = 'INSERT INTO throws(user_id, throw_date, throw_type, throw_speed) VALUES ($1, $2, $3, $4) RETURNING *'
@@ -79,7 +75,7 @@ router.route('/admin-create-throw')
             
             try {
                 const result = await pool.query(text, values);
-                res.redirect('/admin-create-throw')
+                res.redirect(`/user-profile?id=${req.body.user_id}&name=${req.body.user_name}`);
             } catch (error) {
                 console.error(error);
                 res.status(500).send('Server error')
