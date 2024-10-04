@@ -2,13 +2,11 @@ import express from 'express';
 import { pool } from '../models/postgres_db.js';
 import { getSafeName } from "../helpers.js"
 import { getRows } from "../helpers.js"
-import { getAllUsers } from '../helpers.js';
 const router = express.Router();
 
-router.get('/admin', async (req, res) => {
+router.get('/admin', (req, res) => {
     if (req.isAuthenticated()) {
-        const users = await getAllUsers(pool)
-        res.render('admin.ejs', {users : users})
+        res.render('admin.ejs')
     } else {
         res.redirect('/admin-login')
     }

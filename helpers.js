@@ -29,6 +29,12 @@ ORDER BY throw_speed DESC`;
     return result.rows;
 }
 
+async function getAllUsers(pool) {
+    const text = 'SELECT * FROM users'
+    const result = await pool.query(text)
+    return result.rows
+}
+
 function getSafeName(input, whiteList) {
     if (whiteList.includes(input)) {
         return input;
@@ -49,4 +55,4 @@ function gracefulShutdown(pool) {
     });
 }
 
-export { fetchUsers , gracefulShutdown , getSafeName , getRows };
+export { fetchUsers , gracefulShutdown , getSafeName , getRows , getAllUsers};

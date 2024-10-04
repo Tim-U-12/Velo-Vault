@@ -1,23 +1,70 @@
 <!-- tabs for insertion -->
 <!-- Main HUB -->
 <%- include('./partials/header.ejs') %>
+<%- include('./partials/navigationbar.ejs') %>
+<link rel="stylesheet" href="./styles/main.css">
+<link rel="stylesheet" href="./styles/admin.css">
 
-<div class="container">
-    <form action="/admin-create-user" method="get">
-        <section><button type="submit">CREATE: User</button></section>
-    </form>
-    
-    <form action="/admin-create-throw" method="get">
-        <section><button type="submit">CREATE: Throw</button></section>
-    </form>
-    
-    <form action="/admin-read-user" method="get">
-        <section><button type="submit">READ: User</button></section>
-    </form>
-    
-    <form action="/admin-logout" method="post">
-        <section><button type="submit">Logout</button></section>
-    </form>
+<div class="content">
+    <div>
+        <h2>Insert Player</h2>
+        <form id="admin-parameters" action="/admin-create-user" method="post">
+            <section>
+                <label for="first_name">First Name: </label>
+                <input type="text" name="first_name" id="first_name">
+            </section>
+            <section>
+                <label for="last_name">Last Name: </label>
+                <input type="text" name="last_name" id="last_name">
+            </section>
+            <section>
+                <label for="height">Height (metres): </label>
+                <input type="number" name="height" id="height" step="0.01">
+            </section>
+            <section>
+                <label>Dominant arm: </label>
+                <input type="radio" id="right" name="dominant_arm" value="right">
+                <label for="right">Right</label>
+                <input type="radio" id="left" name="dominant_arm" value="left">
+                <label for="left">Left</label>
+            </section>
+            <section>
+                <label>Sex: </label>
+                <input type="radio" id="male" name="sex" value="male">
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="sex" value="female">
+                <label for="female">Female</label>
+            </section>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="ladder-results">
+        <h2>Players</h2>
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Height (m)</td>
+                    <td>Dominant arm</td>
+                    <td>Sex</td>
+                </tr>
+            </thead>
+            <tbody>
+                <% let counter = 1; %>
+                <% users.forEach(function(row) { %>
+                    <tr>
+                        <td><%= row.user_id %></td>
+                        <td><%= row.first_name %> <%= row.last_name %></td>
+                        <td><%= row.height %></td>
+                        <td><%= row.dominant_arm %></td>
+                        <td><%= row.sex %></td>
+                    </tr>
+                    <% counter++; %>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <%- include('./partials/footer.ejs') %>

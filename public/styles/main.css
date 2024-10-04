@@ -93,7 +93,7 @@ thead {
     font-size: 1rem;
 }
 
-#ladder-results {
+.ladder-results {
     display: flex;
     flex-direction: column;
 }
@@ -113,7 +113,7 @@ thead {
         margin-right: 0.15rem;
     }
 
-    #ladder-results {
+    .ladder-results {
         font-size: 0.8rem;
     }
 
