@@ -49,7 +49,7 @@ app.get('/', async (req, res) => {
             const usersHtml = await ejs.renderFile('./views/partials/ladder.ejs', { users: users });
             res.send(usersHtml);
         } else {
-            res.render("main.ejs", {users: users});
+            res.render("main.ejs", {users: users, isAuthenticated: req.isAuthenticated()});
         }
     } catch (error) {
         console.error('Error fetching data', error);

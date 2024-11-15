@@ -9,7 +9,7 @@ router.route('/admin')
     .get(async (req, res) => {
         if (req.isAuthenticated()) {
             const users = await getAllUsers(pool)
-            res.render('admin.ejs', {users : users})
+            res.render('admin.ejs', {users: users, isAuthenticated: req.isAuthenticated()})
         } else {
             res.redirect('/admin-login')
         }

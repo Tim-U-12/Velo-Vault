@@ -22,22 +22,22 @@ router.post('/admin-login', passport.authenticate('local', {
 }));
 
 passport.serializeUser(function(user, cb) {
-process.nextTick(function() {
-    cb(null, { id: user.id, username: user.username });
-});
+    process.nextTick(function() {
+        cb(null, { id: user.id, username: user.username });
+    });
 });
 
 passport.deserializeUser(function(user, cb) {
-process.nextTick(function() {
-    return cb(null, user);
-});
+    process.nextTick(function() {
+        return cb(null, user);
+    });
 });
 
 router.post('/admin-logout', function(req, res, next) {
-req.logout(function(err) {
-    if (err) { return next(err); }
-    res.redirect('/');
-});
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+    });
 });
 
 export default router;

@@ -21,8 +21,30 @@
     margin-left: 15px;
 }
 
+.nav-links {
+    display: flex;
+    gap: 10px;  
+}
+
 .nav-links > a{
     margin-right: 15px;
+}
+
+.nav-links a {
+    text-decoration: none;
+    display: inline-block;
+}
+
+.button-link {
+    text-decoration: none;
+    display: inline-block;
+    border: none;
+    font: inherit;
+    background-color: white;
+}
+
+.button-link:hover {
+    cursor: pointer;
 }
 
 a:link, a:visited {
