@@ -12,7 +12,7 @@
     justify-content: space-between;
 
     border: 1px solid Black;
-    overflow: hidden;
+    overflow: visible;
 
     box-sizing: border-box;
 }
@@ -52,9 +52,56 @@ a:link, a:visited {
     text-decoration: none;
 }
 
+/* Drop down*/
+.dropbtn {
+    color: black;
+    background-color: white;
+    border: none;
+    cursor: pointer;
+    font-family: Consolas, 'Courier New', monospace;
+    font-size: 1rem;
+}
+
+.dropdown {
+    float: right;
+    position: relative;
+    display: inline-block;
+}
+
+/* !!! TODO: Change the margin*/
+.dropdown-content {
+    margin-top: 15px;
+    padding: 10px;
+    display: none;
+    position: absolute;
+    background-color: lightgray;
+    min-width: 160px;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    right: 0;
+    z-index: 1;
+}
+
+.dropdown-content a {
+    margin-top: 10px;
+    display: block;
+}
+
+.dropdown a:hover {background-color: whitesmoke;}
+
+.show {
+    display: block;
+}
+
 @media(max-width: 400px) {
     .top-nav-bar {
         font-size: 0.75rem;
         width: 95%;
+    }
+    .dropbtn {
+        font-size: 0.75rem;
+    }
+    .nav-links {
+        gap: 0px;  
     }
 }
